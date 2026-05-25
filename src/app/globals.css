@@ -1,26 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #eef0f2; /* brand.bgLight: Soft Light Gray */
+  --foreground: #1a1e1b; /* Rich dark charcoal text */
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  /* Brand Semantic Colors */
+  --color-brand-dark: #064e3b;      /* Deep Emerald Green */
+  --color-brand-accent: #10b981;    /* Sage Botanical */
+  --color-brand-bgLight: #eef0f2;   /* Soft Light Gray */
+  --color-brand-bgCard: #e4e6e9;    /* Muted Gray Card */
+  --color-brand-alertBg: #fffbeb;   /* Raw Amber bg */
+  --color-brand-alertTxt: #b45309;  /* Rich Amber text */
+  --color-brand-whatsapp: #25d366;  /* Vibrant WhatsApp green */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #090e0b; /* Extremely dark luxury forest green background */
+    --foreground: #f4f5f4; /* Crisp mineral white text */
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #d6d3d1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a29e;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #292524;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #44403c;
 }
