@@ -18,8 +18,8 @@ export default function Home() {
       <section className="relative overflow-hidden border-b border-stone-200/40 bg-gradient-to-br from-stone-100 via-brand-bgLight to-brand-bgCard">
 
         {/* Ambient glow accents */}
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-brand-dark/5 rounded-full blur-3xl opacity-50 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-brand-alertTxt/5 rounded-full blur-3xl opacity-30 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-brand-dark/5 rounded-full blur-3xl opacity-0 animate-glow-expand pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-brand-alertTxt/5 rounded-full blur-3xl opacity-0 animate-glow-expand animation-delay-300 pointer-events-none" />
 
         {/* Main 12-column grid */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
@@ -28,7 +28,7 @@ export default function Home() {
           <div className="lg:col-span-7 flex flex-col items-start text-left order-2 lg:order-1">
 
             {/* Pill badge */}
-            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-brand-dark/10 px-3.5 py-1.5 rounded-full mb-6 shadow-sm">
+            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-brand-dark/10 px-3.5 py-1.5 rounded-full mb-6 shadow-sm opacity-0 animate-fade-in-up">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
               <span className="text-[10px] font-bold tracking-widest uppercase text-brand-dark">
                 100% Raw African Botanicals
@@ -36,7 +36,7 @@ export default function Home() {
             </div>
 
             {/* Headline */}
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-dark leading-[1.08]">
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-dark leading-[1.08] opacity-0 animate-fade-in-up animation-delay-100">
               100% Pure,{' '}
               <span className="italic font-medium text-brand-accent">Unadulterated</span>
               <br />
@@ -44,12 +44,12 @@ export default function Home() {
             </h1>
 
             {/* Body copy */}
-            <p className="mt-6 text-sm md:text-base text-stone-600 max-w-lg leading-relaxed">
+            <p className="mt-6 text-sm md:text-base text-stone-600 max-w-lg leading-relaxed opacity-0 animate-fade-in-up animation-delay-200">
               Single-ingredient plant powders harvested directly from raw soil, sun-dried, and stone-ground. Absolutely zero concoctions, fillers, binders, or synthetic additions. Pure relief, clinically targeted.
             </p>
 
             {/* Trust micro-stats */}
-            <div className="mt-8 flex items-center gap-6">
+            <div className="mt-8 flex items-center gap-6 opacity-0 animate-fade-in-up animation-delay-300">
               {[
                 { value: '100%', label: 'Single-Ingredient' },
                 { value: '0', label: 'Additives or Fillers' },
@@ -63,7 +63,7 @@ export default function Home() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="mt-10 flex flex-row flex-wrap justify-start items-center gap-3">
+            <div className="mt-10 flex flex-row flex-wrap justify-start items-center gap-3 opacity-0 animate-fade-in-up animation-delay-400">
               <a
                 href="#herbs-section"
                 className="bg-brand-dark hover:bg-emerald-900 text-stone-50 font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center"
@@ -80,27 +80,33 @@ export default function Home() {
           </div>
 
           {/* ── Right: Visual Frame (5 cols) ── */}
-          <div className="lg:col-span-5 w-full order-1 lg:order-2">
-            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-stone-200/40 aspect-[4/3] md:aspect-square">
-              {/* Botanical background image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{
-                  backgroundImage:
-                    'url(https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=1200)',
-                }}
-              />
-              {/* Subtle inner vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/30 via-transparent to-transparent" />
+          <div className="lg:col-span-5 w-full order-1 lg:order-2 opacity-0 animate-fade-in-scale animation-delay-150 flex justify-center lg:justify-end">
+            <div className="relative p-2.5 bg-white/40 backdrop-blur-md rounded-2xl md:rounded-3xl border border-stone-200/30 shadow-xs max-w-sm lg:max-w-md w-full">
+              {/* Artistic layout guide corners */}
+              <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-brand-accent/40 rounded-tl-2xl pointer-events-none" />
+              <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-brand-accent/40 rounded-br-2xl pointer-events-none" />
 
-              {/* Lookbook label pinned bottom-left */}
-              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-                <div className="bg-white/80 backdrop-blur-md rounded-xl px-4 py-3 shadow-sm border border-stone-100/60 max-w-[70%]">
-                  <p className="text-[9px] font-bold tracking-widest uppercase text-brand-accent mb-0.5">Ethically Sourced</p>
-                  <p className="text-xs font-semibold text-brand-dark leading-snug">Raw African Botanical Powders</p>
-                </div>
-                <div className="bg-brand-dark text-stone-50 text-[9px] font-bold tracking-widest uppercase px-3 py-2 rounded-lg shadow-md">
-                  Zero<br />Additives
+              <div className="relative rounded-xl md:rounded-2xl overflow-hidden shadow-md border border-stone-200/40 aspect-[4/5] w-full">
+                {/* Botanical background image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage:
+                      'url(https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=1200)',
+                  }}
+                />
+                {/* Subtle inner vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/30 via-transparent to-transparent" />
+
+                {/* Lookbook label pinned bottom-left */}
+                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between z-10">
+                  <div className="bg-white/80 backdrop-blur-md rounded-xl px-4 py-3 shadow-sm border border-stone-100/60 max-w-[70%]">
+                    <p className="text-[9px] font-bold tracking-widest uppercase text-brand-accent mb-0.5">Ethically Sourced</p>
+                    <p className="text-xs font-semibold text-brand-dark leading-snug">Raw African Botanical Powders</p>
+                  </div>
+                  <div className="bg-brand-dark text-stone-50 text-[9px] font-bold tracking-widest uppercase px-3 py-2 rounded-lg shadow-md">
+                    Zero<br />Additives
+                  </div>
                 </div>
               </div>
             </div>
@@ -202,11 +208,15 @@ export default function Home() {
               className="bg-white border border-stone-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full"
             >
               {/* Herb visual illustration banner */}
-              <div className="relative h-60 w-full bg-brand-bgCard flex items-center justify-center overflow-hidden border-b border-stone-200/60">
+              <div className="relative h-60 w-full bg-emerald-50/40 flex items-center justify-center overflow-hidden border-b border-stone-200/60">
                 <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/10 to-transparent"></div>
                 <div className="w-28 h-28 rounded-full border-2 border-brand-dark/15 flex items-center justify-center animate-pulse">
-                  <svg className="w-14 h-14 text-brand-dark/60" fill="none" stroke="currentColor" strokeWidth="1.25" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M3 12h18M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9z" />
+                  <svg className="w-12 h-12 text-brand-dark/60" fill="none" stroke="currentColor" strokeWidth="1.25" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 22C12 22 20 18 20 11C20 6 16 3 12 3C8 3 4 6 4 11C4 18 12 22 12 22Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3V22" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 7C14 9 17 10 18 11" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 11C10 13 7 14 6 15" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 14C14 16 16 17 17 18" />
                   </svg>
                 </div>
                 {/* Purity Badge */}
@@ -265,6 +275,33 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Scientific Purity Promise Trust Banner */}
+      <section className="w-full relative overflow-hidden py-28 md:py-36 bg-emerald-950">
+        {/* Background Image with fixed parallax */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+          style={{
+            backgroundImage:
+              'url(https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=2000)',
+          }}
+        />
+        {/* High-Contrast Backdrop Overlay */}
+        <div className="absolute inset-0 bg-emerald-950/75 mix-blend-multiply" />
+
+        {/* Content Container */}
+        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center text-stone-100">
+          <span className="text-xs font-bold tracking-widest text-brand-accent mb-4 uppercase inline-block">
+            The Alleviate Organic Standard
+          </span>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6">
+            Zero Concoctions. Zero Compromises.
+          </h2>
+          <p className="text-base md:text-xl text-stone-200 leading-relaxed font-light max-w-2xl mx-auto">
+            Traditional wellness demands absolute purity. We do not blend, mix, or alter our powders with chemical additives, fillers, or binding agents. What you see is 100% what you get—pure, single-ingredient plant matter ground directly from the earth.
+          </p>
         </div>
       </section>
 

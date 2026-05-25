@@ -48,7 +48,7 @@ export default function RootLayout({
               </span>
             </a>
 
-            <nav className="hidden md:flex items-center space-x-8 text-xs font-semibold tracking-wider uppercase text-stone-600 dark:text-stone-400">
+            <nav className="hidden md:flex items-center space-x-8 text-xs font-medium tracking-wide uppercase text-stone-700 dark:text-stone-300">
               <a href="/" className="hover:text-brand-accent transition-colors">
                 Herbs
               </a>
@@ -95,7 +95,7 @@ export default function RootLayout({
                 <h4 className="text-[10px] font-bold tracking-widest uppercase text-stone-600 dark:text-stone-400">
                   Quick Navigation
                 </h4>
-                <ul className="space-y-2.5 text-xs text-stone-550 dark:text-stone-500">
+                <ul className="space-y-2.5 text-xs font-medium text-stone-600 dark:text-stone-400">
                   <li>
                     <a href="/#herbs-section" className="hover:text-brand-accent transition-colors">
                       Browse Herbal Powders
@@ -117,27 +117,27 @@ export default function RootLayout({
                 <h4 className="text-[10px] font-bold tracking-widest uppercase text-stone-600 dark:text-stone-400">
                   Contact Support
                 </h4>
-                <p className="text-xs text-stone-500 dark:text-stone-500">
+                <p className="text-xs text-stone-600 dark:text-stone-400">
                   support@alleviateorganic.com
                 </p>
-                <p className="text-xs text-stone-500 dark:text-stone-505">
+                <p className="text-xs text-stone-600 dark:text-stone-400">
                   +1 (234) 567-890
                 </p>
               </div>
             </div>
 
             {/* Compliance Medical Disclaimer */}
-            <div className="my-10 p-6 md:p-8 rounded-xl bg-brand-alertBg border border-amber-200 text-brand-alertTxt text-[11px] leading-relaxed space-y-3">
-              <p className="font-bold uppercase tracking-widest text-[10px] flex items-center space-x-1.5">
-                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="my-10 p-6 rounded-xl bg-brand-alertBg border border-amber-200/80 text-brand-alertTxt text-[11px] leading-relaxed space-y-3 shadow-xs">
+              <p className="font-bold uppercase tracking-wider text-[10px] flex items-center space-x-1.5 text-brand-alertTxt">
+                <svg className="w-4 h-4 shrink-0 text-brand-alertTxt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <span>Legal Medical Disclaimer</span>
               </p>
-              <p>
+              <p className="text-stone-700/95">
                 These products are 100% raw, single-ingredient plant powders and have not been evaluated by the Food and Drug Administration (FDA) or local healthcare regulatory authorities. These products are not intended to diagnose, treat, cure, or prevent any disease. The traditional information supplied on this platform does not constitute professional medical advice.
               </p>
-              <p>
+              <p className="text-stone-700/95">
                 Please consult a licensed medical practitioner before incorporating any raw botanicals into your health routine, especially if you are pregnant, nursing, taking prescription medications, or managing chronic ailments.
               </p>
             </div>
