@@ -15,42 +15,97 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-brand-bgLight">
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-stone-100 to-brand-bgLight py-20 lg:py-32 border-b border-stone-200/40">
-        {/* Subtle background decoration */}
-        <div className="absolute top-0 right-0 -z-10 w-96 h-96 bg-brand-dark/5 rounded-full blur-3xl opacity-60"></div>
-        <div className="absolute bottom-0 left-0 -z-10 w-80 h-80 bg-brand-alertTxt/5 rounded-full blur-3xl opacity-40"></div>
+      <section className="relative overflow-hidden border-b border-stone-200/40 bg-gradient-to-br from-stone-100 via-brand-bgLight to-brand-bgCard">
 
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 text-center">
-          <div className="inline-flex items-center space-x-2 bg-brand-dark/5 border border-brand-dark/10 px-3.5 py-1.5 rounded-full mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse"></span>
-            <span className="text-[10px] font-bold tracking-widest uppercase text-brand-dark">
-              100% Raw African Botanicals
-            </span>
+        {/* Ambient glow accents */}
+        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-brand-dark/5 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-brand-alertTxt/5 rounded-full blur-3xl opacity-30 pointer-events-none" />
+
+        {/* Main 12-column grid */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24">
+
+          {/* ── Left: Text Column (7 cols) ── */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left order-2 lg:order-1">
+
+            {/* Pill badge */}
+            <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-brand-dark/10 px-3.5 py-1.5 rounded-full mb-6 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+              <span className="text-[10px] font-bold tracking-widest uppercase text-brand-dark">
+                100% Raw African Botanicals
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-dark leading-[1.08]">
+              100% Pure,{' '}
+              <span className="italic font-medium text-brand-accent">Unadulterated</span>
+              <br />
+              African Botanicals
+            </h1>
+
+            {/* Body copy */}
+            <p className="mt-6 text-sm md:text-base text-stone-600 max-w-lg leading-relaxed">
+              Single-ingredient plant powders harvested directly from raw soil, sun-dried, and stone-ground. Absolutely zero concoctions, fillers, binders, or synthetic additions. Pure relief, clinically targeted.
+            </p>
+
+            {/* Trust micro-stats */}
+            <div className="mt-8 flex items-center gap-6">
+              {[
+                { value: '100%', label: 'Single-Ingredient' },
+                { value: '0', label: 'Additives or Fillers' },
+                { value: '2', label: 'Targeted Ailments' },
+              ].map(({ value, label }) => (
+                <div key={label} className="text-left">
+                  <p className="font-serif text-2xl font-bold text-brand-dark">{value}</p>
+                  <p className="text-[10px] text-stone-500 uppercase tracking-wider leading-tight">{label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="mt-10 flex flex-row flex-wrap justify-start items-center gap-3">
+              <a
+                href="#herbs-section"
+                className="bg-brand-dark hover:bg-emerald-900 text-stone-50 font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center"
+              >
+                Explore Powders
+              </a>
+              <a
+                href="#our-mission"
+                className="bg-white/70 backdrop-blur-sm border border-stone-300 hover:bg-white text-stone-700 font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-lg transition-all duration-300 text-center"
+              >
+                Our Purity Pledge
+              </a>
+            </div>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-dark max-w-4xl mx-auto leading-[1.1]">
-            100% Pure, Unadulterated <br className="hidden sm:inline" />
-            <span className="text-brand-accent font-medium">African Botanicals</span>
-          </h1>
+          {/* ── Right: Visual Frame (5 cols) ── */}
+          <div className="lg:col-span-5 w-full order-1 lg:order-2">
+            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-xl border border-stone-200/40 aspect-[4/3] md:aspect-square">
+              {/* Botanical background image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage:
+                    'url(https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=1200)',
+                }}
+              />
+              {/* Subtle inner vignette */}
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/30 via-transparent to-transparent" />
 
-          <p className="mt-8 text-base md:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
-            Single-ingredient plant powders harvested directly from raw soil, sun-dried, and stone-ground. Absolutely zero concoctions, fillers, binders, or synthetic additions. Pure relief, clinically targeted.
-          </p>
-
-          <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <a
-              href="#herbs-section"
-              className="w-full sm:w-auto bg-brand-dark hover:bg-emerald-900 text-stone-50 font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              Explore Powders
-            </a>
-            <a
-              href="#our-mission"
-              className="w-full sm:w-auto border border-stone-300 hover:bg-stone-50 text-stone-700 font-semibold text-xs tracking-wider uppercase px-8 py-3.5 rounded-lg transition-all duration-300"
-            >
-              Our Purity Pledge
-            </a>
+              {/* Lookbook label pinned bottom-left */}
+              <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+                <div className="bg-white/80 backdrop-blur-md rounded-xl px-4 py-3 shadow-sm border border-stone-100/60 max-w-[70%]">
+                  <p className="text-[9px] font-bold tracking-widest uppercase text-brand-accent mb-0.5">Ethically Sourced</p>
+                  <p className="text-xs font-semibold text-brand-dark leading-snug">Raw African Botanical Powders</p>
+                </div>
+                <div className="bg-brand-dark text-stone-50 text-[9px] font-bold tracking-widest uppercase px-3 py-2 rounded-lg shadow-md">
+                  Zero<br />Additives
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </section>
 
