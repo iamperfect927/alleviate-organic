@@ -66,7 +66,7 @@ export default function RootLayout({
             <div className="flex items-center">
               <a
                 href="/#herbs-section"
-                className="bg-brand-dark hover:bg-emerald-900 text-stone-50 font-semibold text-xs tracking-wider uppercase px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-300"
+                className="bg-brand-dark hover:bg-emerald-900 text-stone-50 font-semibold text-xs tracking-wider uppercase px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-300 text-center"
               >
                 Order Powder
               </a>

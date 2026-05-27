@@ -144,7 +144,7 @@ export default function Home() {
             </p>
 
             {/* Trust micro-stats */}
-            <div className="mt-8 flex items-center gap-8 opacity-0 animate-fade-in-up animation-delay-300">
+            <div className="mt-8 flex items-center gap-4 md:gap-8 opacity-0 animate-fade-in-up animation-delay-300">
               {[
                 { value: '10+', label: 'Happy Customers' },
                 { value: '100%', label: 'Natural Ingredients' },
@@ -272,7 +272,7 @@ export default function Home() {
                 iconBg: 'bg-brand-dark/5',
                 iconColor: 'text-brand-dark',
                 title: '100% Single-Ingredient',
-                body: 'One plant. One package. Zero mixtures or multi-herb combos. You always know exactly what you are putting into your body — and precisely what is interacting with your biochemistry.',
+                body: 'One plant. One package. Zero mixtures or multi-herb combos. You always know exactly what you are putting into your body.',
               },
               {
                 icon: (
@@ -281,7 +281,7 @@ export default function Home() {
                 iconBg: 'bg-amber-50',
                 iconColor: 'text-amber-600',
                 title: 'Sun-Dried & Stone-Ground',
-                body: 'No heat extraction, radiation, or chemical processing. Plants are washed in clean water, sun-dehydrated below 40°C, and stone-ground by hand — preserving every volatile oil and therapeutic compound intact.',
+                body: 'No heat extraction, radiation, or chemical processing. Plants are washed in clean water, sun-dehydrated below 40°C, and stone-ground by hand.',
               },
               {
                 icon: (
