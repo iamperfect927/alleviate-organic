@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { herbs } from '../../../data/herbs';
+import Image from 'next/image';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${herb.name} (${herb.scientificName}) | Alleviate Organic`,
     description: `Alleviate Organic | Natural Relief for ${ailmentLabel}. 100% raw, single-ingredient plant powder. Zero additives. Sourced ethically from Africa.`,
   };
+
 }
 
 // 2. Generate Static Params for Ultra-Fast Build Performance
@@ -48,6 +50,10 @@ export default async function HerbPage({ params }: Props) {
     herb.targetAilment === 'piles-hemorrhoids'
       ? 'Piles / Hemorrhoids'
       : 'Menstrual Cramps';
+
+    const productImageUrl = herb.targetAilment === 'piles-hemorrhoids' 
+  ? '/alleviate-organic-pile.png' 
+  : '/alleviate-organic-cramp.png';
 
   return (
     <div className="py-12 md:py-20 bg-brand-bgLight flex flex-col justify-center">
@@ -73,7 +79,7 @@ export default async function HerbPage({ params }: Props) {
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/10 to-transparent"></div>
               
               {/* Concentric rings */}
-              <div className="absolute w-64 h-64 border border-brand-dark/5 rounded-full flex items-center justify-center">
+              {/* <div className="absolute w-64 h-64 border border-brand-dark/5 rounded-full flex items-center justify-center">
                 <div className="w-48 h-48 border border-brand-dark/10 rounded-full flex items-center justify-center animate-pulse">
                   <div className="w-32 h-32 border border-brand-dark/15 rounded-full flex items-center justify-center">
                     <svg className="w-16 h-16 text-brand-dark/60" fill="none" stroke="currentColor" strokeWidth="1.2" viewBox="0 0 24 24">
@@ -81,10 +87,20 @@ export default async function HerbPage({ params }: Props) {
                     </svg>
                   </div>
                 </div>
+              </div> */}
+              <div className="absolute inset-0 w-full h-full p-4 flex items-center justify-center">
+                <Image
+                  src={productImageUrl}
+                  alt={`${herb.name} Product Packaging`}
+                  fill
+                  priority
+                  className="object-contain p-2 transition-transform duration-500 hover:scale-105"
+                  sizes="(max-w-7xl) 50vw, 100vw"
+                />
               </div>
 
               {/* Herb name overlay */}
-              <div className="text-center z-10 px-6">
+              {/* <div className="text-center z-10 px-6">
                 <span className="font-mono text-[10px] tracking-[0.25em] uppercase font-bold text-brand-accent block mb-2">
                   Ethically Sourced
                 </span>
@@ -94,7 +110,7 @@ export default async function HerbPage({ params }: Props) {
                 <p className="text-xs italic text-stone-500">
                   {herb.scientificName}
                 </p>
-              </div>
+              </div> */}
 
               {/* Purity Badge */}
               <div className="absolute top-6 right-6 bg-brand-dark text-stone-50 font-mono text-[9px] tracking-widest uppercase px-4 py-2 rounded-full font-bold shadow-md">

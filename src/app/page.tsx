@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { herbs } from '../data/herbs';
 import { testimonials } from '../data/testimonials';
 import ContactForm from '../components/ContactForm';
@@ -12,18 +13,114 @@ export default function Home() {
     (herb) => activeFilter === 'all' || herb.targetAilment === activeFilter
   );
 
+  // clean, premium botanical and medical-grade SVG paths to replace the emojis
+  const trustItems = [
+    {
+      text: '100% Single-Ingredient',
+      icon: (
+        <svg className="w-4 h-4 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      )
+    },
+    {
+      text: 'Zero Additives or Fillers',
+      icon: (
+        <svg className="w-4 h-4 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      )
+    },
+    {
+      text: 'Volcanic Soil Sourced, Buea',
+      icon: (
+        <svg className="w-4 h-4 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      )
+    },
+    {
+      text: 'Stone-Ground by Hand',
+      icon: (
+        <svg className="w-4 h-4 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11.57V3m0 0L4.5 7.5M9 3v2.756M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
+    },
+    {
+      text: 'Cruelty-Free & Vegan',
+      icon: (
+        <svg className="w-4 h-4 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      )
+    }
+  ]
+
+  // Swapped the emojis of certifications trust badges out for elegant, medical-organic SVG icons styled to match the brand accent color
+  const standards = [
+    { 
+      label: '100% Vegan', 
+      sub: 'No animal by-products',
+      icon: (
+        <svg className="w-6 h-6 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      )
+    },
+    { 
+      label: 'Cruelty-Free', 
+      sub: 'Never tested on animals',
+      icon: (
+        <svg className="w-6 h-6 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h.01M10 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 15c-1.5 0-2 .5-2 1s.5 1 2 1 2-.5 2-1-.5-1-2-1z" />
+        </svg>
+      )
+    },
+    { 
+      label: 'Eco-Conscious', 
+      sub: 'Sustainable harvesting',
+      icon: (
+        <svg className="w-6 h-6 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7H19M9 11l3 3L22 4" />
+        </svg>
+      )
+    },
+    { 
+      label: 'Zero Synthetics', 
+      sub: 'No artificial compounds',
+      icon: (
+        <svg className="w-6 h-6 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      )
+    },
+    { 
+      label: 'Volcanic Origin', 
+      sub: 'Mount Fako, Cameroon',
+      icon: (
+        <svg className="w-6 h-6 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      )
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-brand-bgLight">
 
       {/* ═══════════════════════════════════════════════
           1. HERO SECTION — Emotional Impact
       ═══════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-brand-bgLight border-b border-stone-200/40">
+      <section className="relative overflow-hidden bg-brand-bgLight border-b border-stone-200/40 ">
         {/* Ambient glow accents */}
-        <div className="absolute top-0 right-0 w-[42rem] h-[42rem] bg-brand-dark/5 rounded-full blur-3xl opacity-0 animate-glow-expand pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[42rem] h-[42rem] bg-brand-dark/5 rounded-full blur-3xl opacity-0 animate-glow-expand pointer-events-none " />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-brand-alertTxt/5 rounded-full blur-3xl opacity-0 animate-glow-expand animation-delay-300 pointer-events-none" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-24">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-24 lg:py-4">
 
           {/* ── Left: Text Column ── */}
           <div className="lg:col-span-7 flex flex-col items-start text-left order-2 lg:order-1">
@@ -37,21 +134,22 @@ export default function Home() {
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-6xl font-bold tracking-tight text-brand-dark leading-[1.1] opacity-0 animate-fade-in-up animation-delay-100">
               Nature&apos;s Purest Remedy,{' '}
               <span className="italic font-medium text-brand-accent">
-                Delivered From Africa&apos;s Volcanic Heart.
+                 From Africa.
               </span>
             </h1>
 
             {/* Subheadline — Trust & Authenticity */}
             <p className="mt-6 text-base md:text-lg text-stone-700 font-normal leading-[1.75] max-w-xl opacity-0 animate-fade-in-up animation-delay-200">
-              For centuries, the fertile volcanic soils of Mount Cameroon have nurtured the world&apos;s most potent healing roots. We bring them to your doorstep — raw, single-ingredient, stone-ground, and absolutely free of chemicals. Targeted relief for Piles/Hemorrhoids and Menstrual Cramp pain.
+              Bringing raw, single-ingredient, stone-ground, and absolutely free of chemicals to your doorstep. Targeted relief for Piles/Hemorrhoids and Menstrual Cramp pain.
             </p>
 
             {/* Trust micro-stats */}
             <div className="mt-8 flex items-center gap-8 opacity-0 animate-fade-in-up animation-delay-300">
               {[
-                { value: '500+', label: 'Happy Customers' },
+                { value: '10+', label: 'Happy Customers' },
                 { value: '100%', label: 'Natural Ingredients' },
                 { value: '0', label: 'Additives or Fillers' },
+                { value: '2', label: 'Targeted Ailments' },
               ].map(({ value, label }) => (
                 <div key={label} className="text-left">
                   <p className="font-serif text-2xl md:text-3xl font-bold text-brand-dark leading-none">{value}</p>
@@ -110,25 +208,45 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════
           2. TRUST METRICS STRIP — Social Proof Bar
       ═══════════════════════════════════════════════ */}
-      <section className="bg-brand-dark py-4 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
-            {[
-              { icon: '🌿', text: '100% Single-Ingredient' },
-              { icon: '🔬', text: 'Zero Additives or Fillers' },
-              { icon: '🌋', text: 'Volcanic Soil Sourced, Buea' },
-              { icon: '🤲', text: 'Stone-Ground by Hand' },
-              { icon: '💚', text: 'Cruelty-Free & Vegan' },
-            ].map(({ icon, text }) => (
-              <div key={text} className="flex items-center gap-2 text-stone-300">
-                <span className="text-base">{icon}</span>
-                <span className="text-[11px] font-semibold tracking-wider uppercase whitespace-nowrap">{text}</span>
-                <span className="hidden md:block text-stone-600 ml-4">·</span>
+
+      <section className="bg-brand-dark py-4 overflow-hidden border-y border-emerald-900/40 select-none">
+      <div className="w-full max-w-7xl mx-auto md:px-8">
+        
+        {/* DESKTOP VIEW: Stands perfectly still, beautifully justified */}
+        <div className="hidden lg:flex items-center justify-between gap-4">
+          {trustItems.map(({ icon, text }, idx) => (
+            <div key={`desktop-${text}`} className="flex items-center gap-3 text-stone-200">
+              <div className="flex-shrink-0">{icon}</div>
+              <span className="text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">{text}</span>
+              {idx < trustItems.length - 1 && (
+                <span className="text-emerald-800 font-light ml-6 select-none" aria-hidden="true">•</span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* MOBILE & TABLET VIEW: Continuous, ultra-smooth looping marquee */}
+        <div className="flex lg:hidden w-full relative">
+          <div className="flex w-max animate-marquee gap-12 pr-12">
+            {/* First Loop Pass */}
+            {trustItems.map(({ icon, text }, idx) => (
+              <div key={`mob1-${idx}`} className="flex items-center gap-3 text-stone-200">
+                <div className="flex-shrink-0">{icon}</div>
+                <span className="text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">{text}</span>
+              </div>
+            ))}
+            {/* Second Loop Pass (Duplicates content seamlessly to prevent any blank flashes) */}
+            {trustItems.map(({ icon, text }, idx) => (
+              <div key={`mob2-${idx}`} className="flex items-center gap-3 text-stone-200">
+                <div className="flex-shrink-0">{icon}</div>
+                <span className="text-[11px] font-bold tracking-widest uppercase whitespace-nowrap">{text}</span>
               </div>
             ))}
           </div>
         </div>
-      </section>
+
+      </div>
+    </section>
 
       {/* ═══════════════════════════════════════════════
           3. PURITY MANIFESTO — What We Stand For
@@ -250,26 +368,32 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════
           5. CERTIFICATIONS TRUST BADGES
       ═══════════════════════════════════════════════ */}
+      
       <section className="py-12 bg-white border-b border-stone-200/40">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <p className="text-center text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-8">Our Purity Standards</p>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
-            {[
-              { emoji: '🌿', label: '100% Vegan', sub: 'No animal by-products' },
-              { emoji: '🐇', label: 'Cruelty-Free', sub: 'Never tested on animals' },
-              { emoji: '♻️', label: 'Eco-Conscious', sub: 'Sustainable harvesting' },
-              { emoji: '🔬', label: 'Zero Synthetics', sub: 'No artificial compounds' },
-              { emoji: '🌋', label: 'Volcanic Origin', sub: 'Mount Fako, Cameroon' },
-            ].map(({ emoji, label, sub }) => (
-              <div key={label} className="flex flex-col items-center text-center p-5 rounded-2xl bg-brand-bgLight border border-stone-200/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <span className="text-2xl mb-2">{emoji}</span>
-                <p className="text-xs font-bold text-brand-dark">{label}</p>
-                <p className="text-[10px] text-stone-500 mt-1 leading-snug">{sub}</p>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <p className="text-center text-[11px] font-bold tracking-[0.2em] uppercase text-stone-500 mb-8">
+          Our Purity Standards
+        </p>
+        
+        {/* Adjusted grid system handles responsiveness flawlessly from mobile up to desktop widths */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+          {standards.map(({ icon, label, sub }) => (
+            <div 
+              key={label} 
+              className="flex flex-col items-center text-center p-5 rounded-2xl bg-brand-bgLight border border-stone-200/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group"
+            >
+              {/* Icon Container with a subtle hover color shift */}
+              <div className="mb-3 p-2 bg-white rounded-xl shadow-sm border border-stone-100 group-hover:scale-105 transition-transform duration-300">
+                {icon}
               </div>
-            ))}
-          </div>
+              
+              <p className="text-xs font-bold text-brand-dark tracking-wide">{label}</p>
+              <p className="text-[10px] text-stone-500 mt-1.5 leading-snug font-medium px-1">{sub}</p>
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* ═══════════════════════════════════════════════
           6. FILTERABLE PRODUCT GRID
@@ -310,75 +434,85 @@ export default function Home() {
 
           {/* Herbs Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {filteredHerbs.map((herb) => (
-              <div
-                key={herb.id}
-                className="bg-white border border-stone-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col"
-              >
-                {/* Visual banner */}
-                <div className="relative h-64 w-full bg-emerald-50/60 flex items-center justify-center overflow-hidden border-b border-stone-200/60">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/10 to-transparent" />
-                  <div className="w-32 h-32 rounded-full border-2 border-brand-dark/10 flex items-center justify-center">
-                    <svg className="w-14 h-14 text-brand-dark/50" fill="none" stroke="currentColor" strokeWidth="1.25" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 22C12 22 20 18 20 11C20 6 16 3 12 3C8 3 4 6 4 11C4 18 12 22 12 22Z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3V22" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 7C14 9 17 10 18 11" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 11C10 13 7 14 6 15" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 14C14 16 16 17 17 18" />
-                    </svg>
-                  </div>
-                  <div className="absolute top-4 right-4 bg-brand-dark text-stone-50 font-bold text-[9px] tracking-widest uppercase px-3 py-1.5 rounded-full shadow-sm">
-                    100% Raw Plant
-                  </div>
-                </div>
+            {filteredHerbs.map((herb) => {
+              // Resolve the image paths matching the files inside your public folder
+              const productImageUrl = herb.targetAilment === 'piles-hemorrhoids' 
+                ? '/alleviate-organic-pile.png' 
+                : '/alleviate-organic-cramp.png';
 
-                {/* Card Body */}
-                <div className="p-6 md:p-8 flex flex-col flex-grow">
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-brand-accent">
-                      {herb.targetAilment === 'piles-hemorrhoids' ? 'Vascular Tone & Relief' : 'Spasmodic & Flow Support'}
-                    </span>
-                    <span className="font-mono text-xl font-bold text-stone-900 ml-4 shrink-0">
-                      {herb.price.toLocaleString('en-US')} FCFA
-                    </span>
+              return (
+                <div
+                  key={herb.id}
+                  className="bg-white border border-stone-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col group"
+                >
+                  {/* Visual banner */}
+                  <div className="relative h-64 w-full bg-emerald-50/30 flex items-center justify-center overflow-hidden border-b border-stone-200/60">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-brand-dark/5 to-transparent z-10" />
+                    
+                    {/* Optimized Product Pack Mockup Rendering */}
+                    <div className="absolute inset-0 w-full h-full p-6 flex items-center justify-center bg-gray-200">
+                      <Image
+                        src={productImageUrl}
+                        alt={`${herb.name} Packaging Preview`}
+                        fill
+                        className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-w-7xl) 50vw, 100vw"
+                      />
+                    </div>
+
+                    <div className="absolute top-4 right-4 bg-brand-dark text-stone-50 font-bold text-[9px] tracking-widest uppercase px-3 py-1.5 rounded-full shadow-sm z-10">
+                      100% Raw Plant
+                    </div>
                   </div>
 
-                  <h3 className="font-serif text-2xl font-bold text-brand-dark leading-snug">{herb.name}</h3>
-                  <p className="text-xs italic text-stone-500 mt-1 mb-4">{herb.scientificName}</p>
+                  {/* Card Body */}
+                  <div className="p-6 md:p-8 flex flex-col flex-grow">
+                    <div className="flex justify-between items-start mb-3">
+                      <span className="text-[10px] font-bold tracking-widest uppercase text-brand-accent">
+                        {herb.targetAilment === 'piles-hemorrhoids' ? 'Vascular Tone & Relief' : 'Spasmodic & Flow Support'}
+                      </span>
+                      <span className="font-mono text-xl font-bold text-stone-900 ml-4 shrink-0">
+                        {herb.price.toLocaleString('en-US')} FCFA
+                      </span>
+                    </div>
 
-                  <p className="text-sm leading-relaxed text-stone-700 mb-6 flex-grow">{herb.description}</p>
+                    <h3 className="font-serif text-2xl font-bold text-brand-dark leading-snug">{herb.name}</h3>
+                    <p className="text-xs italic text-stone-500 mt-1 mb-4">{herb.scientificName}</p>
 
-                  <div className="space-y-2.5 mb-8">
-                    {herb.benefits.map((benefit, index) => (
-                      <div key={index} className="flex items-center gap-3 text-sm text-stone-800">
-                        <div className="w-4 h-4 rounded-full bg-brand-accent/15 flex items-center justify-center shrink-0">
-                          <svg className="w-2.5 h-2.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                          </svg>
+                    <p className="text-sm leading-relaxed text-stone-700 mb-6 flex-grow">{herb.description}</p>
+
+                    <div className="space-y-2.5 mb-8">
+                      {herb.benefits.map((benefit, index) => (
+                        <div key={index} className="flex items-center gap-3 text-sm text-stone-800">
+                          <div className="w-4 h-4 rounded-full bg-brand-accent/15 flex items-center justify-center shrink-0">
+                            <svg className="w-2.5 h-2.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <span>{benefit}</span>
                         </div>
-                        <span>{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
 
-                  {/* Card CTAs — Clear Hierarchy */}
-                  <div className="grid grid-cols-2 gap-3 mt-auto">
-                    <a
-                      href={`/herbs/${herb.id}`}
-                      className="border-2 border-brand-dark/20 text-brand-dark hover:border-brand-dark hover:bg-brand-dark/5 text-center font-semibold text-xs tracking-wider uppercase py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center focus:outline-none"
-                    >
-                      View Details
-                    </a>
-                    <a
-                      href={`/checkout?product=${herb.id}`}
-                      className="bg-brand-dark hover:bg-emerald-900 text-stone-50 text-center font-bold text-xs tracking-widest uppercase py-3.5 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center focus:outline-none"
-                    >
-                      Order Now →
-                    </a>
+                    {/* Card CTAs — Clear Hierarchy */}
+                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                      <a
+                        href={`/herbs/${herb.id}`}
+                        className="border-2 border-brand-dark/20 text-brand-dark hover:border-brand-dark hover:bg-brand-dark/5 text-center font-semibold text-xs tracking-wider uppercase py-3.5 rounded-xl transition-all duration-300 flex items-center justify-center focus:outline-none"
+                      >
+                        View Details
+                      </a>
+                      <a
+                        href={`/checkout?product=${herb.id}`}
+                        className="bg-brand-dark hover:bg-emerald-900 text-stone-50 text-center font-bold text-xs tracking-widest uppercase py-3.5 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center focus:outline-none"
+                      >
+                        Order Now →
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
