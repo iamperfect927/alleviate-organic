@@ -43,8 +43,8 @@ export default function CheckoutForm({ herb }: CheckoutFormProps) {
 
   // Calculate pricing
   const subtotal = herb.price;
-  const shipping = 5.00;
-  const tax = subtotal * 0.05;
+  const shipping = 2500; // Flat shipping rate in FCFA
+  const tax = Math.round(subtotal * 0.05); // 5% VAT tax
   const total = subtotal + shipping + tax;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -95,15 +95,15 @@ export default function CheckoutForm({ herb }: CheckoutFormProps) {
       if (paymentMethod === 'whatsapp') {
         const message = `Hi Alleviate Organic, I would like to place an order. Details:\n\n` +
           `- Order ID: ${generatedOrderId}\n` +
-          `- Product: ${herb.name} ($${herb.price.toFixed(2)})\n` +
+          `- Product: ${herb.name} (${herb.price.toLocaleString('en-US')} FCFA)\n` +
           `- Customer: ${formData.name}\n` +
           `- Phone: ${formData.phone}\n` +
           `- Email: ${formData.email}\n` +
           `- Shipping Address: ${formData.address}\n\n` +
-          `- Total: $${total.toFixed(2)} (incl. flat shipping and tax)\n\n` +
+          `- Total: ${total.toLocaleString('en-US')} FCFA (incl. flat shipping and tax)\n\n` +
           `Please send me payment instructions/invoice. Thank you!`;
 
-        const waUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
+        const waUrl = `https://wa.me/237657447445?text=${encodeURIComponent(message)}`;
         window.open(waUrl, '_blank');
       }
     } catch {
@@ -378,28 +378,28 @@ export default function CheckoutForm({ herb }: CheckoutFormProps) {
               <p className="text-xs text-brand-accent font-medium mt-1">100% Raw Plant Powder</p>
             </div>
             <span className="font-mono text-base font-semibold text-stone-900">
-              ${subtotal.toFixed(2)}
+              {subtotal.toLocaleString('en-US')} FCFA
             </span>
           </div>
 
           <div className="space-y-3.5 py-6 border-b border-stone-200/60 text-sm">
             <div className="flex justify-between text-stone-600">
               <span>Subtotal</span>
-              <span className="font-mono">${subtotal.toFixed(2)}</span>
+              <span className="font-mono">{subtotal.toLocaleString('en-US')} FCFA</span>
             </div>
             <div className="flex justify-between text-stone-600">
               <span>Secure Shipping (Flat Rate)</span>
-              <span className="font-mono">${shipping.toFixed(2)}</span>
+              <span className="font-mono">{shipping.toLocaleString('en-US')} FCFA</span>
             </div>
             <div className="flex justify-between text-stone-600">
               <span>Taxes (5%)</span>
-              <span className="font-mono">${tax.toFixed(2)}</span>
+              <span className="font-mono">{tax.toLocaleString('en-US')} FCFA</span>
             </div>
           </div>
 
           <div className="flex justify-between items-baseline pt-6 text-stone-900">
             <span className="font-serif text-lg font-bold">Total due</span>
-            <span className="font-mono text-2xl font-bold text-brand-dark">${total.toFixed(2)}</span>
+            <span className="font-mono text-2xl font-bold text-brand-dark">{total.toLocaleString('en-US')} FCFA</span>
           </div>
         </div>
 
@@ -417,7 +417,7 @@ export default function CheckoutForm({ herb }: CheckoutFormProps) {
               <span>Securing Order...</span>
             </>
           ) : paymentMethod === 'card' ? (
-            <span>Authorize Payment (${total.toFixed(2)})</span>
+            <span>Authorize Payment ({total.toLocaleString('en-US')} FCFA)</span>
           ) : (
             <span className="flex items-center space-x-2">
               <svg className="w-4 h-4 fill-current mr-1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

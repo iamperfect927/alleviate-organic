@@ -21,8 +21,8 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-brand-bgLight text-stone-900">
         {/* Global Navigation Header */}
-        <header className="sticky top-0 z-40 w-full border-b border-stone-200/50 bg-brand-bgLight/80 backdrop-blur-md dark:border-stone-850">
-          <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8">
+        <header className="sticky top-0 z-50 w-full border-b border-stone-200/40 bg-brand-bgLight/80 backdrop-blur-md">
+          <div className="mx-auto flex py-3.5 md:py-4 max-w-7xl items-center justify-between px-6 sm:px-8">
             <a href="/" className="flex items-center space-x-2.5 group focus:outline-none">
               {/* Custom leaf-like SVG logo */}
               <svg
@@ -49,16 +49,16 @@ export default function RootLayout({
             </a>
 
             <nav className="hidden md:flex items-center space-x-8 text-xs font-medium tracking-wide uppercase text-stone-700 dark:text-stone-300">
-              <a href="/" className="hover:text-brand-accent transition-colors">
+              <a href="/" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
                 Herbs
               </a>
-              <a href="/#our-mission" className="hover:text-brand-accent transition-colors">
+              <a href="/#our-mission" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
                 Our Mission
               </a>
-              <a href="/#testimonials" className="hover:text-brand-accent transition-colors">
+              <a href="/#testimonials" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
                 Testimonials
               </a>
-              <a href="/#contact-section" className="hover:text-brand-accent transition-colors">
+              <a href="/#contact-section" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
                 Contact
               </a>
             </nav>
@@ -121,7 +121,7 @@ export default function RootLayout({
                   support@alleviateorganic.com
                 </p>
                 <p className="text-xs text-stone-600 dark:text-stone-400">
-                  +1 (234) 567-890
+                  +237 657447445
                 </p>
               </div>
             </div>
@@ -132,13 +132,13 @@ export default function RootLayout({
                 <svg className="w-4 h-4 shrink-0 text-brand-alertTxt" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
-                <span>Legal Medical Disclaimer</span>
+                <span>Legal Medical Disclaimer & Sourcing Origin</span>
               </p>
               <p className="text-stone-700/95">
-                These products are 100% raw, single-ingredient plant powders and have not been evaluated by the Food and Drug Administration (FDA) or local healthcare regulatory authorities. These products are not intended to diagnose, treat, cure, or prevent any disease. The traditional information supplied on this platform does not constitute professional medical advice.
+                Our single-ingredient herbal powders are 100% raw, pure, and ethically wild-harvested directly from the nutrient-dense volcanic soils of Southwest Cameroon, surrounding the active volcanic zones of Mount Fako. These traditional formulations have not been evaluated by the Ministry of Public Health of Cameroon (MINSANTE), the Food and Drug Administration (FDA), or any other local healthcare regulatory authorities. These products are not intended to diagnose, treat, cure, or prevent any disease. The traditional information supplied on this platform is for educational purposes only and does not constitute professional medical advice.
               </p>
               <p className="text-stone-700/95">
-                Please consult a licensed medical practitioner before incorporating any raw botanicals into your health routine, especially if you are pregnant, nursing, taking prescription medications, or managing chronic ailments.
+                Please consult a licensed healthcare professional or medical practitioner before incorporating any raw botanicals into your health routine, especially if you are pregnant, nursing, taking prescription medications, or managing chronic pelvic or vascular conditions.
               </p>
             </div>
 

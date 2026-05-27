@@ -16,7 +16,7 @@ export const herbs: Herb[] = [
     id: "african-peach-root",
     name: "African Peach Root Powder",
     scientificName: "Nauclea latifolia",
-    price: 35.00,
+    price: 20000,
     targetAilment: "piles-hemorrhoids",
     description: "Sourced from the sun-drenched savannahs of West Africa, our African Peach Root Powder is a potent, time-tested single-ingredient botanical. Historically revered by traditional healers, this raw root powder is utilized to target chronic vascular swelling, alleviate localized pelvic discomfort, and promote structural tone in blood vessels.",
     benefits: [
@@ -33,7 +33,7 @@ export const herbs: Herb[] = [
     id: "african-wild-ginger",
     name: "African Wild Ginger Root Powder",
     scientificName: "Siphonochilus aethiopicus",
-    price: 38.00,
+    price: 22000,
     targetAilment: "menstrual-cramps",
     description: "Grown in the rich soils of Southern Africa, African Wild Ginger is one of the continent's most precious and endangered therapeutic plants. This single-ingredient root powder is celebrated for its natural antispasmodic properties, helping to soothe intense uterine muscle contractions, ease pelvic tension, and restore natural flow during cycles.",
     benefits: [

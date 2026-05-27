@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
 
   // Helper to determine the pre-filled WhatsApp message
   const getWhatsAppUrl = () => {
-    const phoneNumber = "1234567890"; // Mock business number (User can replace with actual)
+    const phoneNumber = "237657447445"; // HQ Cameroon Number
     let message = "Hi, I am on the Alleviate Organic website and have a question about your raw African herbal powders.";
 
     if (pathname === '/') {

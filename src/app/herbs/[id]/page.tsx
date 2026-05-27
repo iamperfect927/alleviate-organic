@@ -139,7 +139,7 @@ export default async function HerbPage({ params }: Props) {
               </p>
               <div className="flex items-baseline mt-4 space-x-4">
                 <span className="font-mono text-3xl font-bold text-brand-dark">
-                  ${herb.price.toFixed(2)}
+                  {herb.price.toLocaleString('en-US')} FCFA
                 </span>
                 <span className="text-xs text-stone-500 tracking-wide">
                   / 100g Resealable Premium Pouch
