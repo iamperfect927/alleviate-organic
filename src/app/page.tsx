@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { herbs } from '../data/herbs';
 import { testimonials } from '../data/testimonials';
@@ -8,6 +8,102 @@ import ContactForm from '../components/ContactForm';
 
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState<'all' | 'piles-hemorrhoids' | 'menstrual-cramps'>('all');
+  const [visibleCards, setVisibleCards] = useState(3);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Touch swipe support state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleCards(1);
+      } else if (window.innerWidth < 1024) {
+        setVisibleCards(2);
+      } else {
+        setVisibleCards(3);
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxIndex = testimonials.length - visibleCards;
+
+  // Auto-slide effect every 10 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => {
+        if (prev >= maxIndex) {
+          return 0; // Wrap around to the start
+        }
+        return prev + 1;
+      });
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, [currentIndex, maxIndex]);
+
+  const safeIndex = Math.min(currentIndex, Math.max(0, maxIndex));
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
+  };
+
+  // Scroll entrance animation for Manifesto Cards
+  const [manifestoVisible, setManifestoVisible] = useState(false);
+  const manifestoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setManifestoVisible(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    const currentRef = manifestoRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
 
   const filteredHerbs = herbs.filter(
     (herb) => activeFilter === 'all' || herb.targetAilment === activeFilter
@@ -263,7 +359,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div ref={manifestoRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 icon: (
@@ -292,8 +388,14 @@ export default function Home() {
                 title: 'Zero Additives or Fillers',
                 body: 'No silicon dioxide, magnesium stearate, cellulose, or artificial colorants. What you receive is pure, unadulterated plant matter in its highest therapeutic density — nothing more, nothing less.',
               },
-            ].map(({ icon, iconBg, iconColor, title, body }) => (
-              <div key={title} className="bg-brand-bgLight p-8 rounded-2xl border border-stone-200/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            ].map(({ icon, iconBg, iconColor, title, body }, idx) => (
+              <div 
+                key={title} 
+                className={`bg-brand-bgLight p-8 rounded-2xl border border-stone-200/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 opacity-0 ${
+                  manifestoVisible ? 'animate-fade-in-up' : ''
+                }`}
+                style={{ animationDelay: `${idx * 200}ms` }}
+              >
                 <div className={`w-12 h-12 ${iconBg} rounded-2xl flex items-center justify-center mb-6`}>
                   <svg className={`w-6 h-6 ${iconColor}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">{icon}</svg>
                 </div>
@@ -487,7 +589,7 @@ export default function Home() {
                           <div className="w-4 h-4 rounded-full bg-brand-accent/15 flex items-center justify-center shrink-0">
                             <svg className="w-2.5 h-2.5 text-brand-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                            </svg>
+                            </svg>    
                           </div>
                           <span>{benefit}</span>
                         </div>
@@ -549,7 +651,7 @@ export default function Home() {
           8. TESTIMONIALS — Social Proof
       ═══════════════════════════════════════════════ */}
       <section id="testimonials" className="py-16 md:py-24 bg-white border-b border-stone-200/40">
-        <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 relative">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-brand-accent">Real People. Real Relief.</span>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-brand-dark mt-3 leading-tight">
@@ -560,42 +662,136 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {testimonials.map((test) => (
-              <div
-                key={test.id}
-                className="bg-brand-bgLight p-8 rounded-2xl border border-stone-200/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
-              >
-                <div className="flex-grow">
-                  {/* Stars */}
-                  <div className="flex items-center gap-1 mb-5">
-                    {[...Array(test.rating)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4 text-amber-500 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-sm leading-[1.8] text-stone-800 italic mb-6">
-                    &ldquo;{test.text}&rdquo;
-                  </p>
-                </div>
+          {/* Desktop/Tablet absolute glassmorphic arrow controls */}
+          <div className="hidden md:block">
+            <button
+              onClick={handlePrev}
+              disabled={safeIndex === 0}
+              className={`absolute -left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-stone-200/60 shadow-md flex items-center justify-center text-brand-dark transition-all duration-300 focus:outline-none cursor-pointer ${
+                safeIndex === 0 
+                  ? 'opacity-30 cursor-not-allowed' 
+                  : 'hover:bg-white hover:text-brand-accent hover:shadow-lg active:scale-95'
+              }`}
+              aria-label="Previous testimonials"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={safeIndex === maxIndex}
+              className={`absolute -right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-stone-200/60 shadow-md flex items-center justify-center text-brand-dark transition-all duration-300 focus:outline-none cursor-pointer ${
+                safeIndex === maxIndex 
+                  ? 'opacity-30 cursor-not-allowed' 
+                  : 'hover:bg-white hover:text-brand-accent hover:shadow-lg active:scale-95'
+              }`}
+              aria-label="Next testimonials"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
 
-                <div className="flex items-center justify-between pt-5 border-t border-stone-200/70">
-                  <div>
-                    <h4 className="text-sm font-bold text-stone-900">{test.name}</h4>
-                    <p className="text-xs text-stone-500 mt-0.5">{test.location}</p>
-                  </div>
-                  {test.verifiedPurchase && (
-                    <div className="flex items-center gap-1.5 text-[9px] font-bold text-brand-dark tracking-wider uppercase bg-brand-accent/10 border border-brand-accent/20 px-2.5 py-1.5 rounded-lg">
-                      <svg className="w-3 h-3 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.0" d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Verified</span>
+          {/* Carousel Viewport */}
+          <div 
+            className="overflow-hidden cursor-grab active:cursor-grabbing"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            {/* Carousel Inner Track */}
+            <div 
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${safeIndex * (100 / visibleCards)}%)` }}
+            >
+              {testimonials.map((test) => (
+                <div
+                  key={test.id}
+                  className="flex-shrink-0 px-3 flex"
+                  style={{ width: `${100 / visibleCards}%` }}
+                >
+                  <div className="w-full bg-brand-bgLight p-8 rounded-2xl border border-stone-200/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                    <div className="flex-grow">
+                      {/* Stars */}
+                      <div className="flex items-center gap-1 mb-5">
+                        {[...Array(test.rating)].map((_, i) => (
+                          <svg key={i} className="w-4 h-4 text-amber-500 fill-current" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="text-sm leading-[1.8] text-stone-800 italic mb-6">
+                        &ldquo;{test.text}&rdquo;
+                      </p>
                     </div>
-                  )}
+
+                    <div className="flex items-center justify-between pt-5 border-t border-stone-200/70">
+                      <div>
+                        <h4 className="text-sm font-bold text-stone-900">{test.name}</h4>
+                        <p className="text-xs text-stone-500 mt-0.5">{test.location}</p>
+                      </div>
+                      {test.verifiedPurchase && (
+                        <div className="flex items-center gap-1.5 text-[9px] font-bold text-brand-dark tracking-wider uppercase bg-brand-accent/10 border border-brand-accent/20 px-2.5 py-1.5 rounded-lg">
+                          <svg className="w-3 h-3 text-brand-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.0" d="M5 13l4 4L19 7" />
+                          </svg>
+                          <span>Verified</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Pagination Controls Row */}
+          <div className="flex items-center justify-center gap-3 mt-10">
+            {/* Mobile Prev Arrow */}
+            <button
+              onClick={handlePrev}
+              disabled={safeIndex === 0}
+              className={`w-9 h-9 rounded-full border border-stone-200/80 flex items-center justify-center text-stone-600 transition-all duration-200 md:hidden cursor-pointer ${
+                safeIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-stone-50 hover:text-brand-accent active:scale-95'
+              }`}
+              aria-label="Previous slide"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* Dots indicator */}
+            <div className="flex gap-2">
+              {Array.from({ length: testimonials.length - visibleCards + 1 }).map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  onClick={() => setCurrentIndex(dotIdx)}
+                  className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none cursor-pointer ${
+                    safeIndex === dotIdx 
+                      ? 'w-7 bg-brand-dark' 
+                      : 'w-2.5 bg-stone-300 hover:bg-stone-400'
+                  }`}
+                  aria-label={`Go to slide ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Next Arrow */}
+            <button
+              onClick={handleNext}
+              disabled={safeIndex === maxIndex}
+              className={`w-9 h-9 rounded-full border border-stone-200/80 flex items-center justify-center text-stone-600 transition-all duration-200 md:hidden cursor-pointer ${
+                safeIndex === maxIndex ? 'opacity-30 cursor-not-allowed' : 'hover:bg-stone-50 hover:text-brand-accent active:scale-95'
+              }`}
+              aria-label="Next slide"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
