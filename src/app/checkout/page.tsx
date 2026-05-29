@@ -16,23 +16,23 @@ export default async function CheckoutPage({ searchParams }: Props) {
   const productParam = resolvedSearchParams.product;
   const productId = typeof productParam === 'string' ? productParam : undefined;
 
-  // Retrieve the selected product
-  const herb = herbs.find((h) => h.id === productId);
+  // Optionally resolve a direct-link product (fallback for URL-based checkout)
+  const herb = productId ? herbs.find((h) => h.id === productId) : undefined;
 
   return (
-    <div className="py-12 md:py-24 bg-stone-50/30 dark:bg-stone-900/5 min-h-screen">
+    <div className="py-12 md:py-24 bg-stone-50/30 min-h-screen">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         
         {/* Header section */}
         <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-800 dark:text-emerald-500">
+          <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-800">
             Secure Gateway
           </span>
-          <h1 className="font-serif text-3xl font-bold text-stone-900 dark:text-white mt-2">
+          <h1 className="font-serif text-3xl font-bold text-stone-900 mt-2">
             Alleviate Organic Checkout
           </h1>
-          <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
-            Please fill in your billing and shipping parameters. Choose credit card processing or compliance-safe WhatsApp direct invoice.
+          <p className="mt-3 text-xs text-stone-500">
+            Please fill in your billing and shipping details. Your order will be confirmed via WhatsApp invoice.
           </p>
         </div>
 
@@ -45,3 +45,4 @@ export default async function CheckoutPage({ searchParams }: Props) {
     </div>
   );
 }
+

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { herbs } from '../../../data/herbs';
 import Image from 'next/image';
+import AddToCartButton from '../../../components/AddToCartButton';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -170,12 +171,7 @@ export default async function HerbPage({ params }: Props) {
 
             {/* Call to action */}
             <div>
-              <a
-                href={`/checkout?product=${herb.id}`}
-                className="inline-block w-full bg-brand-dark hover:bg-emerald-900 text-stone-50 text-center font-semibold text-xs tracking-wider uppercase py-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-accent/50"
-              >
-                Proceed to Order
-              </a>
+              <AddToCartButton herb={herb} />
             </div>
 
             {/* Key Benefits */}

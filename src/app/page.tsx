@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { herbs } from '../data/herbs';
 import { testimonials } from '../data/testimonials';
 import ContactForm from '../components/ContactForm';
+import { useCart } from '../context/CartContext';
 
 export default function Home() {
+  const { addToCart } = useCart();
   const [activeFilter, setActiveFilter] = useState<'all' | 'piles-hemorrhoids' | 'menstrual-cramps'>('all');
   const [visibleCards, setVisibleCards] = useState(3);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -604,12 +606,12 @@ export default function Home() {
                       >
                         View Details
                       </a>
-                      <a
-                        href={`/checkout?product=${herb.id}`}
-                        className="bg-brand-dark hover:bg-emerald-900 text-stone-50 text-center font-bold text-xs tracking-widest uppercase py-3.5 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center focus:outline-none"
+                      <button
+                        onClick={() => addToCart(herb)}
+                        className="bg-brand-dark hover:bg-emerald-900 text-stone-50 text-center font-bold text-xs tracking-widest uppercase py-3.5 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center focus:outline-none cursor-pointer"
                       >
-                        Order Now →
-                      </a>
+                        Add to Bag +
+                      </button>
                     </div>
                   </div>
                 </div>

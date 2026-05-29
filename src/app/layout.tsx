@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { Suspense } from "react";
+import Header from "../components/Header";
+import { CartProvider } from "../context/CartContext";
 
 export const metadata: Metadata = {
   title: {
@@ -20,64 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-brand-bgLight text-stone-900">
-        {/* Global Navigation Header */}
-        <header className="sticky top-0 z-50 w-full border-b border-stone-200/40 bg-brand-bgLight/80 backdrop-blur-md">
-          <div className="mx-auto flex py-3.5 md:py-4 max-w-7xl items-center justify-between px-6 sm:px-8">
-            <a href="/" className="flex items-center space-x-2.5 group focus:outline-none">
-              {/* Custom leaf-like SVG logo */}
-              <svg
-                className="h-7 w-7 text-brand-dark dark:text-brand-accent transition-transform group-hover:rotate-12 duration-300"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 3v18M3 12h18M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.5 7.5c-1.5 2-4.5 2-6 0s-4.5-2-6 0m18 9c-1.5-2-4.5-2-6 0s-4.5 2-6 0"
-                />
-              </svg>
-              <span className="font-serif text-xl md:text-2xl font-bold tracking-tight text-brand-dark dark:text-white">
-                Alleviate <span className="text-brand-accent font-medium">Organic</span>
-              </span>
-            </a>
+        <CartProvider>
+          {/* Global Navigation Header */}
+          <Header />
 
-            <nav className="hidden md:flex items-center space-x-8 text-xs font-medium tracking-wide uppercase text-stone-700 dark:text-stone-300">
-              <a href="/" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
-                Herbs
-              </a>
-              <a href="/#our-mission" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
-                Our Mission
-              </a>
-              <a href="/#testimonials" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
-                Testimonials
-              </a>
-              <a href="/#contact-section" className="relative py-1 hover:text-brand-accent transition-colors after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand-accent after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left">
-                Contact
-              </a>
-            </nav>
+          {/* Page Content */}
+          <main className="flex-grow flex flex-col">{children}</main>
 
-            <div className="flex items-center">
-              <a
-                href="/#herbs-section"
-                className="bg-brand-dark hover:bg-emerald-900 text-stone-50 font-semibold text-xs tracking-wider uppercase px-5 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-300 text-center"
-              >
-                Order Powder
-              </a>
-            </div>
-          </div>
-        </header>
-
-        {/* Page Content */}
-        <main className="flex-grow flex flex-col">{children}</main>
-
-        {/* Global Footer & Medical Disclaimer */}
+          {/* Global Footer & Medical Disclaimer */}
         <footer className="w-full border-t border-stone-250/40 bg-brand-bgCard dark:bg-stone-900/10 dark:border-stone-850 pt-16 pb-12">
           <div className="mx-auto max-w-7xl px-6 sm:px-8">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-stone-200/60 dark:border-stone-800/40">
@@ -147,12 +99,13 @@ export default function RootLayout({
               <p className="mt-2 sm:mt-0 font-medium tracking-wide">100% PURE BOTANICAL GUARANTEE</p>
             </div>
           </div>
-        </footer>
+          </footer>
 
-        {/* Dynamic Context-Aware WhatsApp Float Button */}
-        <Suspense fallback={null}>
-          <WhatsAppButton />
-        </Suspense>
+          {/* Dynamic Context-Aware WhatsApp Float Button */}
+          <Suspense fallback={null}>
+            <WhatsAppButton />
+          </Suspense>
+        </CartProvider>
       </body>
     </html>
   );

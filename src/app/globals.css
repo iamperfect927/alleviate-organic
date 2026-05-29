@@ -135,3 +135,47 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   width: max-content;
   animation: marquee 25s linear infinite;
 }
+
+/* Cart system animations */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
