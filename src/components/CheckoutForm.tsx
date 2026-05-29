@@ -475,9 +475,8 @@ export default function CheckoutForm({ herb }: CheckoutFormProps) {
 
   // Calculate pricing
   const subtotal = herb.price;
-  const shipping = 2500; // Flat shipping rate in FCFA
-  const tax = Math.round(subtotal * 0.05); // 5% VAT tax
-  const total = subtotal + shipping + tax;
+  const delivery = 2500; // Flat delivery rate in FCFA
+  const total = subtotal + delivery;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -658,13 +657,13 @@ export default function CheckoutForm({ herb }: CheckoutFormProps) {
               <span className="font-mono">{subtotal.toLocaleString('en-US')} FCFA</span>
             </div>
             <div className="flex justify-between text-stone-600">
-              <span>Secure Shipping (Flat Rate)</span>
-              <span className="font-mono">{shipping.toLocaleString('en-US')} FCFA</span>
+              <span>Secure Delivery (Flat Rate)</span>
+              <span className="font-mono">{delivery.toLocaleString('en-US')} FCFA</span>
             </div>
-            <div className="flex justify-between text-stone-600">
+            {/* <div className="flex justify-between text-stone-600">
               <span>Taxes (5%)</span>
               <span className="font-mono">{tax.toLocaleString('en-US')} FCFA</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex justify-between items-baseline pt-6 text-stone-900">

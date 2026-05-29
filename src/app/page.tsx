@@ -611,7 +611,7 @@ export default function Home() {
             <div className="lg:col-span-7">
               <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-brand-accent">Get in Touch</span>
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-brand-dark mt-3 mb-4 leading-tight">
-                Speak Directly With a Herbalist.
+                Speak Directly With Us.
               </h2>
               <p className="text-base text-stone-700 mb-8 leading-relaxed">
                 Have questions about dosage, your specific condition, or our sourcing philosophy? We respond to every message personally — no bots, no automated replies.
